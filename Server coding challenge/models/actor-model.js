@@ -28,11 +28,31 @@ const Actors = {
                 .catch( err => {
                     throw new Error( err );
                 });
+    },
+    updateActor:function (id_,updatedData) {
+      return actorsCollection
+          .updateOne({id:id_},{$set:updatedData})
+          .then(updatedActor=>{
+              return updatedActor;
+          })
+          .catch(err=>{
+              return err;
+          });
+    },
+    getActorsByName:function(firstName){
+        return actorsCollection
+            .findOne({firstName:firstName})
+            .then(actor=>{
+                if(!actor) {
+                    throw new Error("Actor not found");
+                }
+                return actor
+            })
+            .catch(err=>{
+                throw new Error(err);
+            })
     }
-    /*
-        Your code goes here
-    */
-}
+};
 
 module.exports = {
     Actors
